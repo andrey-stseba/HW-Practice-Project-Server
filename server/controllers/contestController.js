@@ -251,15 +251,13 @@ module.exports.setOfferStatus = async (req, res, next) => {
     }
   }
 };
-// req.query.limit
-// req.query.offset
-// req.query.status
+
 module.exports.getCustomersContests = (req, res, next) => {
   const {
     query: { limit, offset, status },
     tokenData: { userId },
   } = req;
-  // contests = await db.Contests.findAll...
+
   db.Contests.findAll({
     where: { status, userId },
     limit,
@@ -287,22 +285,34 @@ module.exports.getCustomersContests = (req, res, next) => {
 };
 
 module.exports.getContests = (req, res, next) => {
+  const {
+    query: {
+      typeIndex,
+      contestId,
+      industry,
+      awardSort,
+      limit,
+      offset,
+      ownEntries,
+    },
+  } = req;
+
   const predicates = UtilFunctions.createWhereForAllContests(
-    req.body.typeIndex,
-    req.body.contestId,
-    req.body.industry,
-    req.body.awardSort
+    typeIndex,
+    contestId,
+    industry,
+    awardSort
   );
   db.Contests.findAll({
     where: predicates.where,
     order: predicates.order,
-    limit: req.body.limit,
-    offset: req.body.offset ? req.body.offset : 0,
+    limit: limit,
+    offset: offset ? offset : 0,
     include: [
       {
         model: db.Offers,
-        required: req.body.ownEntries,
-        where: req.body.ownEntries ? { userId: req.tokenData.userId } : {},
+        required: ownEntries,
+        where: ownEntries ? { userId: req.tokenData.userId } : {},
         attributes: ['id'],
       },
     ],

@@ -1,7 +1,7 @@
 {
   "development": {
-    "database": "squadhelp-pe2021-1-chat-dev",
-    "host": "mongo-dev",
+    "database": "squadhelp-chat-dev",
+    "host": "localhost",
     "port": 27017
   },
   "production": {
