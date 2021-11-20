@@ -1,24 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import s from './TransactionTable.module.sass';
 
 export const TransactionTable = props => {
-  const { transactions } = props;
+  const {
+    transactions,
+    data: { firstName, lastName },
+  } = props;
+
   return (
-    <table>
-      <caption> Transaction Table</caption>
+    <table className={s.transactionTable}>
+      <caption className={s.transactionCaption}>
+        <h4 className={s.headerName}>
+          Hi,
+          <span className={s.info}>{firstName}</span>
+          <span className={s.info}>{lastName}</span>
+        </h4>
+        Transaction Table
+      </caption>
       <thead>
         <tr>
-          <th>Date</th>
-          <th>Operation type </th>
-          <th>Amount</th>
+          <th className={s.label}>Date</th>
+          <th className={s.label}>Operation type </th>
+          <th className={s.label}>Amount</th>
         </tr>
       </thead>
       <tbody>
         {transactions.map(({ id, date, operationType, amount }) => (
           <tr key={id}>
-            <td>{date}</td>
-            <td>{operationType}</td>
-            <td>{amount}</td>
+            <td className={s.info}>{date}</td>
+            <td className={s.info}>{operationType}</td>
+            <td className={s.info}>{amount}</td>
           </tr>
         ))}
       </tbody>

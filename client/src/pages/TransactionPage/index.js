@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import React from 'react';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
@@ -10,16 +11,28 @@ const transactions = [
   { id: 3, date: '2021-09-04', operationType: 'INCOME', amount: 40 },
 ];
 
-function TransactionPage () {
+function TransactionPage (props) {
+  const { firstName, lastName } = props;
   return (
     <>
       <Header />
       <section className={styles.transactionTableContainer}>
-        <TransactionTable transactions={transactions} />
+        <TransactionTable
+          transactions={transactions}
+          data={{ firstName, lastName }}
+        />
       </section>
       <Footer />
     </>
   );
 }
+const mapStateToProps = state => {
+  const {
+    userStore: {
+      data: { firstName, lastName },
+    },
+  } = state;
+  return { firstName, lastName };
+};
 
-export default TransactionPage;
+export default connect(mapStateToProps, null)(TransactionPage);
