@@ -295,6 +295,7 @@ module.exports.getContests = (req, res, next) => {
       offset,
       ownEntries,
     },
+    tokenData: { userId },
   } = req;
 
   const predicates = UtilFunctions.createWhereForAllContests(
@@ -312,7 +313,7 @@ module.exports.getContests = (req, res, next) => {
       {
         model: db.Offers,
         required: ownEntries,
-        where: ownEntries ? { userId: req.tokenData.userId } : {},
+        where: ownEntries ? { userId: userId } : {},
         attributes: ['id'],
       },
     ],
